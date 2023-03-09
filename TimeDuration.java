@@ -11,14 +11,25 @@ public class TimeDuration {
         numOfTimeDurations += 1;
     }
 
-    public static TimeDuration parseFromString(String time){
+    public static TimeDuration parseFromStringColon(String time){
+        
         int hours = 0;
         int minutes = 0;
         int seconds = 0;
-        String[] integers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        for (int i = time.length(); i > 0; i--){
 
+        int numColons = 0;
+        for (int i = 0; i < time.length() - 1; i++){
+            if (time.substring(i, i +1).equals(":")){
+                numColons++;
+            }
         }
+        System.out.println(numColons);
+        
+
+
+
+        TimeDuration sol = new TimeDuration(hours, minutes, seconds);
+        return sol;
     }
     
     public int getHours(){
@@ -54,8 +65,9 @@ public class TimeDuration {
     }
 
     public static void main(String[] args) {
-        TimeDuration uno = new TimeDuration(9, 9, 9);
-        System.out.println(uno.toString());
-        System.out.println(numOfTimeDurations);
+        // TimeDuration uno = new TimeDuration(9, 9, 9);
+        // System.out.println(uno.toString());
+        // System.out.println(numOfTimeDurations);
+        parseFromStringColon("::::");
     }
 }
