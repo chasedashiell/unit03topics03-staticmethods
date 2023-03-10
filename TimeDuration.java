@@ -11,23 +11,60 @@ public class TimeDuration {
         numOfTimeDurations += 1;
     }
 
-    public static TimeDuration parseFromStringColon(String time){
+    private static TimeDuration parseFromStringNotColon(String Time){
+        Time = Time.toUpperCase();
+        int hours = 0;
+        int minutes = 0;
+        int seconds = 0;
+
+        for (int i = Time.length(); i >= 0; i++){
+            String secondsString = "";
+            int j = i;
+            while (Time.substring(i, Time.length()).equals("S") && i != 0){
+                if (Time.substring(i, Time.length()).equals("H") || (Time.substring(i, Time.length()).equals("M"))){
+                    break;
+                } else {
+                    secondsString = Time.substring(j, i) + secondsString;
+                }
+                j--;
+            }
+        }
+
+        TimeDuration sol = new TimeDuration(hours, minutes, seconds);
+        return sol;
+    }
+
+    private static TimeDuration parseFromStringColon(String time){
         
         int hours = 0;
         int minutes = 0;
         int seconds = 0;
 
         int numColons = 0;
-        for (int i = 0; i < time.length() - 1; i++){
+        for (int i = 0; i <= time.length() - 1; i++){
             if (time.substring(i, i +1).equals(":")){
                 numColons++;
             }
         }
-        System.out.println(numColons);
-        
 
-
-
+        //solves for one colon
+        if(numColons == 1){
+            int indexOfTheColon = time.indexOf(":");
+            String minsString = time.substring(0, indexOfTheColon);
+            String secondsString = time.substring(indexOfTheColon +1, time.length());
+            minutes = Integer.parseInt(minsString);
+            seconds = Integer.parseInt(secondsString);
+        // solves for two
+        } else if(numColons == 2){
+            int indexOfTheFirstColon = time.indexOf(":");
+            int indexOfTheSecondColon = time.lastIndexOf(":");
+            String hoursString = time.substring(0, indexOfTheFirstColon);
+            String minsString = time.substring(indexOfTheFirstColon+1, indexOfTheSecondColon);
+            String secondsString = time.substring(indexOfTheSecondColon +1, time.length());
+            hours = Integer.parseInt(hoursString);
+            minutes = Integer.parseInt(minsString);
+            seconds = Integer.parseInt(secondsString);
+        }
         TimeDuration sol = new TimeDuration(hours, minutes, seconds);
         return sol;
     }
@@ -68,6 +105,5 @@ public class TimeDuration {
         // TimeDuration uno = new TimeDuration(9, 9, 9);
         // System.out.println(uno.toString());
         // System.out.println(numOfTimeDurations);
-        parseFromStringColon("::::");
     }
 }
